@@ -1,19 +1,15 @@
+// app.js
 const express = require('express');
-const { port } = require('./config/config');
+const dotenv = require('dotenv');
 const chatRoutes = require('./routes/chatRoutes');
-const errorHandler = require('./middleware/errorHandler');
+const authRoutes = require('./routes/authRoutes');
 
+dotenv.config();
 const app = express();
+app.use(express.json());
 
-// Middleware to parse JSON bodies
-app.use(express.json()); // This must be present
-
-// Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 
-// Error handling middleware
-app.use(errorHandler);
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port} in ${process.env.NODE_ENV} mode`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
