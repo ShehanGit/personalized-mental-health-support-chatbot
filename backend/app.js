@@ -1,20 +1,19 @@
 const express = require('express');
 const { port } = require('./config/config');
-const testRoutes = require('./routes/testRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
 // Middleware to parse JSON bodies
-app.use(express.json());
+app.use(express.json()); // This must be present
 
 // Routes
-app.use('/api/test', testRoutes);
+app.use('/api/chat', chatRoutes);
 
-// Error handling middleware (place last)
+// Error handling middleware
 app.use(errorHandler);
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port} in ${process.env.NODE_ENV} mode`);
 });

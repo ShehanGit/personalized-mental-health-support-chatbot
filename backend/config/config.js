@@ -1,8 +1,8 @@
 const dotenv = require('dotenv');
-
 dotenv.config();
 
 module.exports = {
     port: process.env.PORT || 5000,
-    nodeEnv: process.env.NODE_ENV || 'development'
+    nodeEnv: process.env.NODE_ENV || 'development',
+    openaiApiKey: process.env.OPENAI_API_KEY
 };
