@@ -1,15 +1,22 @@
-// app.js
-const express = require('express');
-const dotenv = require('dotenv');
-const chatRoutes = require('./routes/chatRoutes');
-const authRoutes = require('./routes/authRoutes');
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-dotenv.config();
-const app = express();
-app.use(express.json());
+export default function Index() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to Mental Health Support</Text>
+    </View>
+  );
+}
 
-app.use('/api/auth', authRoutes);
-app.use('/api/chat', chatRoutes);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
