@@ -2,12 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthNavigator from './auth/AuthNavigator';
-import MainNavigator from './main/MainNavigator';
-
-const Stack = createNativeStackNavigator();
+import AppDrawerNavigator from './AppDrawerNavigator';
 
 export default function RootNavigator() {
   const [userToken, setUserToken] = useState<string | null>(null);
@@ -32,13 +29,7 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {userToken ? (
-          <Stack.Screen name="Main" component={MainNavigator} />
-        ) : (
-          <Stack.Screen name="Auth" component={AuthNavigator} />
-        )}
-      </Stack.Navigator>
+      {userToken ? <AppDrawerNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }

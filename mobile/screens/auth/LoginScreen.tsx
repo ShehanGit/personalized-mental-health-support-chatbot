@@ -10,14 +10,11 @@ export default function LoginScreen({ navigation }: any) {
 
   const handleLogin = async () => {
     try {
-      // Call your backend's /auth/login endpoint
       const response = await api.post('/auth/login', { email, password });
-      // Example response: { token: "JWT_TOKEN", userId: "..." }
       const { token } = response.data;
-      // Save token
       await AsyncStorage.setItem('userToken', token);
-      // Replace the current navigator state with the main app flow
-      navigation.replace('Main');
+      // Do not navigate manually; let RootNavigator decide which navigator to show.
+      // navigation.replace('Main'); // Remove this line.
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -49,5 +46,5 @@ export default function LoginScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, justifyContent: 'center' },
   input: { borderWidth: 1, marginVertical: 8, padding: 10, borderRadius: 5 },
-  title: { fontSize: 24, marginBottom: 20, textAlign: 'center' }
+  title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
 });
