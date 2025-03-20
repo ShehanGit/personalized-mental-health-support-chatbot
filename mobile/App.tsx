@@ -1,11 +1,12 @@
+// App.tsx
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppNavigator from './navigation/AppNavigator';
+import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <AppNavigator />
+      <RootNavigator />
     </View>
   );
 }
