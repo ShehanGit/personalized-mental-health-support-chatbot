@@ -35,8 +35,7 @@ MindCompanion offers a supportive, personalized experience by:
   Uses user details to create a dynamic system prompt for the OpenAI API.
 - **Session Management:**  
   Create new chat sessions and select previous sessions using a side drawer.
-- **Mood Tracker (Optional):**  
-  Log and visualize daily moods (integrated with chart libraries).
+
 - **Responsive UI:**  
   Handles keyboard avoidance, smooth scrolling with FlatList, and custom theming.
 - **Backend Integration:**  
@@ -49,11 +48,9 @@ MindCompanion offers a supportive, personalized experience by:
   - MongoDB Atlas (Mongoose)  
   - OpenAI API  
 - **Mobile App:**  
-  - React Native with Expo  
-  - AsyncStorage  
+  - React Native with Expo    
   - React Navigation (Stack, Drawer)  
   - Axios for HTTP requests  
-  - Optional: react-native-chart-kit for mood tracking
 
 ## Installation
 
