@@ -15,6 +15,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 
 interface ChatMessage {
@@ -31,7 +32,9 @@ export default function ChatScreen() {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileData, setProfileData] = useState<any>(null);
 
+  // Fetch chat history on mount
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
@@ -64,18 +67,42 @@ export default function ChatScreen() {
     fetchChatHistory();
   }, [sessionId]);
 
+  // Fetch user's personal data from AsyncStorage
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const storedProfile = await AsyncStorage.getItem('userData');
+        if (storedProfile) {
+          setProfileData(JSON.parse(storedProfile));
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
   const sendMessage = async () => {
     if (!message.trim()) return;
-
+  
     const newUserMessage: ChatMessage = {
       id: Date.now().toString(),
       text: message,
       isUser: true,
     };
     setChatHistory(prev => [...prev, newUserMessage]);
-
+  
     try {
-      const response = await api.post('/chat/message', { sessionId, message });
+      // Build the payload with userProfile
+      const payload = {
+        sessionId,
+        message,
+        userProfile: profileData,
+      };
+      console.log('Sending payload to /chat/message:', payload); // LOG for debugging
+  
+      const response = await api.post('/chat/message', payload);
       const newBotMessage: ChatMessage = {
         id: Date.now().toString() + '_bot',
         text: response.data.response,
@@ -89,6 +116,7 @@ export default function ChatScreen() {
     }
   };
 
+  // Memoize reversed chat history for performance
   const reversedChatHistory = useMemo(() => {
     return [...chatHistory].reverse();
   }, [chatHistory]);
@@ -228,7 +256,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textInput: {
-    flex: 1,
+    flex: 1,  
     height: 44,
     paddingHorizontal: 12,
     borderColor: '#DDDDDD',

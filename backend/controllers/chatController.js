@@ -21,14 +21,19 @@ const startNewSession = async (req, res) => {
 // Process a new message within a chat session
 const sendMessage = async (req, res) => {
     try {
-        const { sessionId, message } = req.body;
+        // Extract sessionId, message, and userProfile from the request body
+        const { sessionId, message, userProfile } = req.body;
         const userId = req.user.userId;
 
         if (!sessionId || !message) {
             return res.status(400).json({ error: "Session ID and message are required" });
         }
 
-        const chatResponse = await getChatResponse(sessionId, userId, message);
+        // Log the received userProfile for debugging purposes
+        console.log('sendMessage received userProfile:', userProfile);
+
+        // Pass userProfile along to getChatResponse for personalized responses
+        const chatResponse = await getChatResponse(sessionId, userId, message, userProfile);
         res.status(200).json(chatResponse);
     } catch (error) {
         res.status(500).json({ error: "Error processing message", details: error.message });
