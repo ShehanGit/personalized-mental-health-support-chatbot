@@ -1,3 +1,4 @@
+// screens/OnboardingScreen.tsx
 import React, { useState } from 'react';
 import { 
   ScrollView, 
@@ -53,6 +54,7 @@ const defaultUserData: UserData = {
 export default function OnboardingScreen({ navigation }: any) {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [userData, setUserData] = useState<UserData>(defaultUserData);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const steps = [
     'Basic Personal Context',
@@ -79,9 +81,8 @@ export default function OnboardingScreen({ navigation }: any) {
   const saveData = async () => {
     try {
       await AsyncStorage.setItem('userData', JSON.stringify(userData));
-      Alert.alert('Success', 'Your data has been saved.');
-      // Navigate to main app; adjust route name as needed
-      navigation.replace('Main');
+      Alert.alert('Success', 'Your data has been saved successfully.');
+      setIsSaved(true);
     } catch (error) {
       console.error('Error saving user data:', error);
       Alert.alert('Error', 'Failed to save your data.');
@@ -250,7 +251,7 @@ export default function OnboardingScreen({ navigation }: any) {
             <Text>Boundaries: {userData.boundaries}</Text>
             <Text>Theme: {userData.theme}</Text>
             <Text>Text Size: {userData.textSize}</Text>
-            <Button title="Save and Continue" onPress={saveData} />
+            <Button title="Save Data" onPress={saveData} />
           </View>
         );
       default:
@@ -264,6 +265,9 @@ export default function OnboardingScreen({ navigation }: any) {
       <View style={styles.navigationButtons}>
         {currentStep > 0 && <Button title="Previous" onPress={prevStep} />}
         {currentStep < steps.length - 1 && <Button title="Next" onPress={nextStep} />}
+        {isSaved && (
+          <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+        )}
       </View>
     </ScrollView>
   );

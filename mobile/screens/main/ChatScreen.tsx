@@ -12,6 +12,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  SafeAreaView,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import api from '../../services/api';
@@ -25,7 +26,7 @@ interface ChatMessage {
 export default function ChatScreen() {
   const route = useRoute();
   const { sessionId: routeSessionId } = route.params || {};
-  const sessionId = routeSessionId || '67db5f1db692a978b6bb1a42'; // Fallback if none is provided
+  const sessionId = routeSessionId || '67db5f1db692a978b6bb1a42';
 
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -93,8 +94,20 @@ export default function ChatScreen() {
   }, [chatHistory]);
 
   const renderItem = ({ item }: { item: ChatMessage }) => (
-    <View style={[styles.messageBubble, item.isUser ? styles.userBubble : styles.botBubble]}>
-      <Text style={styles.messageText}>{item.text}</Text>
+    <View
+      style={[
+        styles.messageBubble,
+        item.isUser ? styles.userBubble : styles.botBubble,
+      ]}
+    >
+      <Text
+        style={[
+          styles.messageText,
+          item.isUser ? styles.userText : styles.botText,
+        ]}
+      >
+        {item.text}
+      </Text>
     </View>
   );
 
@@ -109,58 +122,131 @@ export default function ChatScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.screen}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.screen}>
-          <FlatList
-            inverted
-            data={reversedChatHistory}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            style={styles.chatList}
-            contentContainerStyle={{ paddingVertical: 10 }}
-            initialNumToRender={10}
-            maxToRenderPerBatch={10}
-            windowSize={5}
-            removeClippedSubviews={true}
-            getItemLayout={(data, index) => ({
-              length: 70,
-              offset: 70 * index,
-              index,
-            })}
-          />
-          <View style={styles.inputArea}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Type a message..."
-              placeholderTextColor="#999"
-              value={message}
-              onChangeText={setMessage}
-              returnKeyType="send"
-              onSubmitEditing={sendMessage}
+      <SafeAreaView style={styles.safeArea}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.screen}>
+            <FlatList
+              inverted
+              data={reversedChatHistory}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              style={styles.chatList}
+              contentContainerStyle={styles.chatListContent}
+              initialNumToRender={10}
+              maxToRenderPerBatch={10}
+              windowSize={5}
+              removeClippedSubviews={true}
+              getItemLayout={(data, index) => ({
+                length: 70,
+                offset: 70 * index,
+                index,
+              })}
             />
-            <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-              <Text style={styles.sendButtonText}>Send</Text>
-            </TouchableOpacity>
+            <View style={styles.inputArea}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Type a message..."
+                placeholderTextColor="#999"
+                value={message}
+                onChangeText={setMessage}
+                returnKeyType="send"
+                onSubmitEditing={sendMessage}
+              />
+              <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+                <Text style={styles.sendButtonText}>Send</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: '#f0f2f5' },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  chatList: { flex: 1, paddingHorizontal: 10 },
-  messageBubble: { padding: 12, borderRadius: 16, marginVertical: 6, maxWidth: '75%' },
-  userBubble: { backgroundColor: '#4a90e2', alignSelf: 'flex-end', borderBottomRightRadius: 0 },
-  botBubble: { backgroundColor: '#7b7b7b', alignSelf: 'flex-start', borderBottomLeftRadius: 0 },
-  messageText: { color: '#fff', fontSize: 16 },
-  inputArea: { flexDirection: 'row', padding: 10, backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#ccc', alignItems: 'center' },
-  textInput: { flex: 1, height: 40, paddingHorizontal: 12, borderColor: '#ddd', borderWidth: 1, borderRadius: 20, backgroundColor: '#f9f9f9', color: '#333' },
-  sendButton: { marginLeft: 10, backgroundColor: '#4a90e2', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 20 },
-  sendButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FAFAFA',
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: '#FAFAFA',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  chatList: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+  chatListContent: {
+    paddingVertical: 10,
+  },
+  messageBubble: {
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    marginVertical: 6,
+    maxWidth: '75%',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  userBubble: {
+    backgroundColor: '#4a90e2',
+    alignSelf: 'flex-end',
+    borderBottomRightRadius: 4,
+  },
+  botBubble: {
+    backgroundColor: '#E4E6EB',
+    alignSelf: 'flex-start',
+    borderBottomLeftRadius: 4,
+  },
+  messageText: {
+    fontSize: 16,
+    lineHeight: 20,
+  },
+  userText: {
+    color: '#FFFFFF',
+  },
+  botText: {
+    color: '#333333',
+  },
+  inputArea: {
+    flexDirection: 'row',
+    padding: 8,
+    borderTopWidth: 1,
+    borderColor: '#E8E8E8',
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+  },
+  textInput: {
+    flex: 1,
+    height: 44,
+    paddingHorizontal: 12,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 12,
+    backgroundColor: '#F9F9F9',
+    color: '#333333',
+  },
+  sendButton: {
+    marginLeft: 8,
+    backgroundColor: '#4a90e2',
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  sendButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
