@@ -2,14 +2,7 @@
 const axios = require('axios');
 const { openaiApiKey } = require('../config/config');
 const ChatMessage = require('../models/ChatMessage');
-
-const crisisKeywords = [
-  'kill myself',
-  'end my life',
-  'don’t want to live',
-  'suicide',
-  'hurt myself'
-];
+const { isCrisisMessage } = require('./crisisDetector'); // New module for crisis detection
 
 const saveChatMessage = async (sessionId, userId, userMessage, chatResponse, isCrisis) => {
   try {
@@ -86,10 +79,10 @@ Use this context to personalize all interactions. Tailor your responses to be su
 }
 
 const getChatResponse = async (sessionId, userId, userMessage, userProfile) => {
-  const lowerMessage = userMessage.toLowerCase();
-  const isCrisis = crisisKeywords.some(keyword => lowerMessage.includes(keyword));
+  // Use the new crisis detection method instead of simple keyword check.
+  const crisisDetected = await isCrisisMessage(userMessage);
   
-  if (isCrisis) {
+  if (crisisDetected) {
     const crisisResponse = "I'm really worried about you. Please reach out to someone who can help. Here's a helpline: 1-800-273-8255.";
     await saveChatMessage(sessionId, userId, userMessage, crisisResponse, true);
     return { response: crisisResponse, isCrisis: true };
@@ -99,10 +92,7 @@ const getChatResponse = async (sessionId, userId, userMessage, userProfile) => {
     const history = await getConversationHistory(sessionId);
     const messages = [];
     const systemPrompt = buildSystemPrompt(userProfile);
-    messages.push({
-      role: 'system',
-      content: systemPrompt
-    });
+    messages.push({ role: 'system', content: systemPrompt });
     
     history.forEach((msg) => {
       messages.push({ role: 'user', content: msg.userMessage });
@@ -114,7 +104,7 @@ const getChatResponse = async (sessionId, userId, userMessage, userProfile) => {
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o-mini', // Make sure this is the correct model name
         messages,
         temperature: 0.7
       },
