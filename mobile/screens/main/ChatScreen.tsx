@@ -100,7 +100,7 @@ export default function ChatScreen() {
         message,
         userProfile: profileData,
       };
-      console.log('Sending payload to /chat/message:', payload); // LOG for debugging
+      //console.log('Sending payload to /chat/message:', payload); // LOG for debugging
   
       const response = await api.post('/chat/message', payload);
       const newBotMessage: ChatMessage = {

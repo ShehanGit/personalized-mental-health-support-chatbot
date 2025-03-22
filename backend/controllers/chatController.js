@@ -30,7 +30,7 @@ const sendMessage = async (req, res) => {
         }
 
         // Log the received userProfile for debugging purposes
-        console.log('sendMessage received userProfile:', userProfile);
+        //console.log('sendMessage received userProfile:', userProfile);
 
         // Pass userProfile along to getChatResponse for personalized responses
         const chatResponse = await getChatResponse(sessionId, userId, message, userProfile);
