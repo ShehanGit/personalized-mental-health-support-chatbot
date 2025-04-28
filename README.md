@@ -1,11 +1,4 @@
-// readme-generator.js
-const fs = require('fs');
-const path = require('path');
 
-/**
- * Generates a comprehensive README file for the MindCompanion project
- */
-function generateReadme() {
   // Define the README content
   const readmeContent = `# 🧠 MindCompanion - Personalized Mental Health Support Chatbot
 
