@@ -88,5 +88,57 @@ cp .env.example .env
 npm run dev
 ```
 
+## Mobile App Setup
 
+```bash
+cd mobile
+npm install
+# Update api.ts with your backend URL
+expo start
+```
 
+## ML Model Setup
+
+```bash
+cd ml-model/my-crisis-detection
+pip install -r requirements.txt
+python crisis_service.py
+```
+
+## Environment Variables
+
+```bash
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+OPENAI_API_KEY=your_openai_api_key
+```
+## Project Structure
+
+```bash
+├── backend/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   └── app.js
+├── mobile/
+│   ├── components/
+│   ├── navigation/
+│   ├── screens/
+│   ├── services/
+│   └── App.tsx
+└── ml-model/
+    └── my-crisis-detection/
+        ├── crisis_service.py
+        └── train_distilbert.py
+```
+
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+- OpenAI for API integration
+- Hugging Face for transformer models
+- MongoDB Atlas for database hosting
