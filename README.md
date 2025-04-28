@@ -1,6 +1,4 @@
-
-  // Define the README content
-  const readmeContent = `# 🧠 MindCompanion - Personalized Mental Health Support Chatbot
+# MindCompanion - Personalized Mental Health Support Chatbot
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-v14%2B-green)](https://nodejs.org)
