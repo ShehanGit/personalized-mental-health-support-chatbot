@@ -1,62 +1,144 @@
-# MindCompanion - personalized-mental-health-support-chatbot
+# MindCompanion - Personalized Mental Health Support Chatbot
 
+## Project Overview
+MindCompanion is a comprehensive mental health support application that combines mobile technology, machine learning, and conversational AI to provide personalized mental health support. The system includes crisis detection capabilities and personalized chat interactions based on user profiles.
 
+### Core Components
 
-MindCompanion is a mobile mental health chatbot designed to provide compassionate support and personalized advice. The app collects user details during onboarding and uses this data to tailor its responses through integration with the OpenAI API. The project consists of a Node.js/Express backend (with MongoDB Atlas and OpenAI integration) and a React Native (Expo) mobile app.
+1. **Mobile Application (React Native/Expo)**
+   - User authentication and profile management
+   - Personalized chat interface
+   - Mood tracking functionality
+   - Profile customization
+   - Multi-session chat management
 
-## Table of Contents
+2. **Backend Server (Node.js/Express)**
+   - User authentication and session management
+   - Chat history storage
+   - Integration with OpenAI API
+   - Crisis detection service integration
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-  - [Backend Setup](#backend-setup)
-  - [Mobile App Setup](#mobile-app-setup)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
+3. **Crisis Detection Service (Python/FastAPI)**
+   - DistilBERT-based crisis detection model
+   - Real-time text analysis
+   - Crisis probability assessment
 
-## Overview
+## Technical Stack
 
-MindCompanion offers a supportive, personalized experience by:
-- Collecting personal details (nickname, age range, primary mental health concerns, daily routine, etc.) during onboarding.
-- Storing these details locally (using AsyncStorage) for personalization.
-- Allowing users to chat with a mental health companion that uses OpenAI API responses tailored to their input.
-- Enabling multiple chat sessions, session management via a side drawer, and viewing/updating profile information.
+### Mobile App
+- React Native with Expo
+- TypeScript
+- React Navigation (Stack & Drawer)
+- AsyncStorage for local data
+- Axios for API communication
+- React Native Animatable
+- Custom UI components
+
+### Backend
+- Node.js & Express
+- MongoDB with Mongoose
+- JWT authentication
+- OpenAI API integration
+- RESTful API architecture
+
+### ML Model
+- FastAPI
+- PyTorch
+- Transformers (DistilBERT)
+- Python 3.8+
 
 ## Features
 
-- **Multi-Step Onboarding:**  
-  Collects essential personal and mental health-related information from users.
-- **User Profile:**  
-  Saves and displays user data from AsyncStorage.
-- **Personalized Chat:**  
-  Uses user details to create a dynamic system prompt for the OpenAI API.
-- **Session Management:**  
-  Create new chat sessions and select previous sessions using a side drawer.
+### User Experience
+- Multi-step onboarding process
+- Personalized chat interactions
+- Real-time crisis detection
+- Mood tracking visualization
+- Multiple chat sessions
+- Customizable user profiles
 
-- **Responsive UI:**  
-  Handles keyboard avoidance, smooth scrolling with FlatList, and custom theming.
-- **Backend Integration:**  
-  Uses Express and MongoDB Atlas for data storage and processing.
+### Security & Privacy
+- JWT-based authentication
+- Secure password hashing
+- Protected API endpoints
+- Local storage of sensitive data
 
-## Tech Stack
+### AI & ML Capabilities
+- Crisis detection model
+- Personalized response generation
+- Context-aware conversations
+- Real-time text analysis
 
-- **Backend:**  
-  - Node.js / Express  
-  - MongoDB Atlas (Mongoose)  
-  - OpenAI API  
-- **Mobile App:**  
-  - React Native with Expo    
-  - React Navigation (Stack, Drawer)  
-  - Axios for HTTP requests  
+## Installation & Setup
 
-## Installation
+### Prerequisites
 
-### Backend Setup
+- Node.js 14+ for backend
+- Python 3.8+ for ML model
+- MongoDB instance
+- OpenAI API key
 
-1. **Clone the repository and navigate to the backend folder:**
-   ```bash
-   git clone <repository_url>
-   cd <repository_folder>/backend
+## Backend Setup
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configure environment variables
+npm run dev
+```
+
+## Mobile App Setup
+
+```bash
+cd mobile
+npm install
+# Update api.ts with your backend URL
+expo start
+```
+
+## ML Model Setup
+
+```bash
+cd ml-model/my-crisis-detection
+pip install -r requirements.txt
+python crisis_service.py
+```
+
+## Environment Variables
+
+```bash
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+OPENAI_API_KEY=your_openai_api_key
+```
+## Project Structure
+
+```bash
+├── backend/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   └── app.js
+├── mobile/
+│   ├── components/
+│   ├── navigation/
+│   ├── screens/
+│   ├── services/
+│   └── App.tsx
+└── ml-model/
+    └── my-crisis-detection/
+        ├── crisis_service.py
+        └── train_distilbert.py
+```
+
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+- OpenAI for API integration
+- Hugging Face for transformer models
+- MongoDB Atlas for database hosting
