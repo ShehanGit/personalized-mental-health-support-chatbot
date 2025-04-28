@@ -141,8 +141,3 @@ OPENAI_API_KEY=your_openai_api_key
 
 ### License
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-- OpenAI for API integration
-- Hugging Face for transformer models
-- MongoDB Atlas for database hosting
