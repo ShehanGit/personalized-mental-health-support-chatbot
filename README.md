@@ -136,9 +136,7 @@ OPENAI_API_KEY=your_openai_api_key
 │   ├── services/
 │   └── App.tsx
 └── ml-model/
-    └── my-crisis-detection/
-        ├── crisis_service.py
-        └── train_distilbert.py
+
 ```
 
 ### License
