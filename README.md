@@ -73,7 +73,7 @@ MindCompanion is a comprehensive mental health support application that combines
 
 ### Prerequisites
 
-# Node.js 14+ for backend
-# Python 3.8+ for ML model
-# MongoDB instance
-# OpenAI API key
+- Node.js 14+ for backend
+- Python 3.8+ for ML model
+- MongoDB instance
+- OpenAI API key
