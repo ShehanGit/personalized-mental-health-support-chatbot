@@ -1,62 +1,182 @@
-# MindCompanion - personalized-mental-health-support-chatbot
+// readme-generator.js
+const fs = require('fs');
+const path = require('path');
 
+/**
+ * Generates a comprehensive README file for the MindCompanion project
+ */
+function generateReadme() {
+  // Define the README content
+  const readmeContent = `# 🧠 MindCompanion - Personalized Mental Health Support Chatbot
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-v14%2B-green)](https://nodejs.org)
+[![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)](https://reactnative.dev/)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 
-MindCompanion is a mobile mental health chatbot designed to provide compassionate support and personalized advice. The app collects user details during onboarding and uses this data to tailor its responses through integration with the OpenAI API. The project consists of a Node.js/Express backend (with MongoDB Atlas and OpenAI integration) and a React Native (Expo) mobile app.
+## 📋 Table of Contents
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-  - [Backend Setup](#backend-setup)
-  - [Mobile App Setup](#mobile-app-setup)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Technical Stack](#technical-stack)
+- [Installation & Setup](#installation--setup)
+- [API Documentation](#api-documentation)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
 - [License](#license)
+- [Contact](#contact)
 
-## Overview
+## 🔍 Project Overview
 
-MindCompanion offers a supportive, personalized experience by:
-- Collecting personal details (nickname, age range, primary mental health concerns, daily routine, etc.) during onboarding.
-- Storing these details locally (using AsyncStorage) for personalization.
-- Allowing users to chat with a mental health companion that uses OpenAI API responses tailored to their input.
-- Enabling multiple chat sessions, session management via a side drawer, and viewing/updating profile information.
+MindCompanion is an innovative mental health support platform designed to provide personalized assistance through a conversational AI interface. The application leverages advanced machine learning to offer emotional support, detect potential crisis situations, and maintain a continuous, personalized dialogue with users.
 
-## Features
+Our mission is to make mental health support accessible, immediate, and personalized, helping users navigate their emotional well-being with privacy and care.
 
-- **Multi-Step Onboarding:**  
-  Collects essential personal and mental health-related information from users.
-- **User Profile:**  
-  Saves and displays user data from AsyncStorage.
-- **Personalized Chat:**  
-  Uses user details to create a dynamic system prompt for the OpenAI API.
-- **Session Management:**  
-  Create new chat sessions and select previous sessions using a side drawer.
+## ✨ Key Features
 
-- **Responsive UI:**  
-  Handles keyboard avoidance, smooth scrolling with FlatList, and custom theming.
-- **Backend Integration:**  
-  Uses Express and MongoDB Atlas for data storage and processing.
+- **Personalized Chat Experience**: AI-driven conversations tailored to individual user profiles and needs
+- **Crisis Detection**: Real-time analysis of conversations to identify potential crisis situations
+- **Mood Tracking**: Visual representation of emotional patterns over time
+- **Multiple Chat Sessions**: Support for different conversation threads and topics
+- **Private & Secure**: End-to-end encryption and local storage of sensitive information
+- **User Profile Customization**: Personalized settings to enhance user experience
+- **Multi-step Onboarding**: Guided setup process for new users
 
-## Tech Stack
+## 🏗️ Architecture
 
-- **Backend:**  
-  - Node.js / Express  
-  - MongoDB Atlas (Mongoose)  
-  - OpenAI API  
-- **Mobile App:**  
-  - React Native with Expo    
-  - React Navigation (Stack, Drawer)  
-  - Axios for HTTP requests  
+MindCompanion follows a three-tier architecture designed for scalability, security, and performance:
 
-## Installation
+\`\`\`
+├── backend/           # Node.js/Express backend server
+├── mobile/            # React Native/Expo mobile application
+└── ml-model/          # Crisis detection ML model service
+\`\`\`
+
+### Core Components
+
+1. **Mobile Application**: React Native/Expo frontend that provides the user interface
+2. **Backend API**: Node.js/Express server that handles authentication, data storage, and OpenAI integration
+3. **ML Service**: Python-based crisis detection model using DistilBERT for real-time text analysis
+
+## 🛠️ Technical Stack
+
+### Mobile Application
+- **Framework**: React Native with Expo
+- **Language**: TypeScript
+- **Navigation**: React Navigation (Stack & Drawer)
+- **State Management**: React Context API
+- **Storage**: AsyncStorage & Secure Store
+- **Networking**: Axios
+- **UI Components**: Custom components with React Native Animatable
+- **Visualization**: React Native Chart Kit & SVG
+
+### Backend Server
+- **Runtime**: Node.js 14+
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JWT-based auth system
+- **External API**: OpenAI API integration
+- **Security**: bcrypt for password hashing
+- **Environment**: dotenv for configuration
+
+### ML Service
+- **Framework**: FastAPI
+- **ML Libraries**: PyTorch, Transformers
+- **Model**: Fine-tuned DistilBERT
+- **Language**: Python 3.8+
+
+## 📥 Installation & Setup
+
+### Prerequisites
+\`\`\`bash
+# Node.js 14+ for backend
+# Python 3.8+ for ML model
+# MongoDB instance
+# OpenAI API key
+\`\`\`
 
 ### Backend Setup
+\`\`\`bash
+cd backend
+npm install
+cp .env.example .env
+# Configure environment variables
+npm run dev
+\`\`\`
 
-1. **Clone the repository and navigate to the backend folder:**
-   ```bash
-   git clone <repository_url>
-   cd <repository_folder>/backend
+### Mobile App Setup
+\`\`\`bash
+cd mobile
+npm install
+# Update api.ts with your backend URL
+expo start
+\`\`\`
+
+### ML Model Setup
+\`\`\`bash
+cd ml-model/my-crisis-detection
+pip install -r requirements.txt
+python crisis_service.py
+\`\`\`
+
+## 🔌 API Documentation
+
+### Authentication
+- POST \`/api/auth/signup\` - User registration
+- POST \`/api/auth/login\` - User login
+
+### Chat
+- POST \`/api/chat/new-session\` - Create new chat session
+- POST \`/api/chat/message\` - Send message
+- GET \`/api/chat/sessions\` - Get user's chat sessions
+- GET \`/api/chat/history/:sessionId\` - Get chat history
+
+### Crisis Detection
+- POST \`/predict\` - Analyze text for crisis indicators
+
+## 📂 Project Structure
+
+\`\`\`
+├── backend/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   └── app.js
+├── mobile/
+│   ├── components/
+│   ├── navigation/
+│   ├── screens/
+│   ├── services/
+│   └── App.tsx
+└── ml-model/
+    └── my-crisis-detection/
+        ├── crisis_service.py
+        └── train_distilbert.py
+\`\`\`
+
+## 👥 Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📝 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📮 Contact
+For any queries regarding this project, please open an issue in the repository.
+`;
+
+  // Write the README file to the current directory
+  fs.writeFileSync(path.join(process.cwd(), 'README.md'), readmeContent);
+  console.log('README.md has been successfully generated!');
+}
+
+// Execute the function
+generateReadme();
+
+module.exports = { generateReadme };
