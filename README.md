@@ -81,9 +81,16 @@ MindCompanion is a comprehensive mental health support application that combines
 ## Backend Setup
 
 ```bash
+git clone https://github.com/ShehanGit/personalized-mental-health-support-chatbot.git
+cd synerharvest
+```
+
+```bash
 cd backend
 npm install
 cp .env.example .env
+```
+```bash
 # Configure environment variables
 npm run dev
 ```
