@@ -1,173 +1,79 @@
 # MindCompanion - Personalized Mental Health Support Chatbot
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-v14%2B-green)](https://nodejs.org)
-[![React Native](https://img.shields.io/badge/React%20Native-Expo-blue)](https://reactnative.dev/)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-
-## 📋 Table of Contents
-
-- [Project Overview](#project-overview)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Technical Stack](#technical-stack)
-- [Installation & Setup](#installation--setup)
-- [API Documentation](#api-documentation)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-
-## 🔍 Project Overview
-
-MindCompanion is an innovative mental health support platform designed to provide personalized assistance through a conversational AI interface. The application leverages advanced machine learning to offer emotional support, detect potential crisis situations, and maintain a continuous, personalized dialogue with users.
-
-Our mission is to make mental health support accessible, immediate, and personalized, helping users navigate their emotional well-being with privacy and care.
-
-## ✨ Key Features
-
-- **Personalized Chat Experience**: AI-driven conversations tailored to individual user profiles and needs
-- **Crisis Detection**: Real-time analysis of conversations to identify potential crisis situations
-- **Mood Tracking**: Visual representation of emotional patterns over time
-- **Multiple Chat Sessions**: Support for different conversation threads and topics
-- **Private & Secure**: End-to-end encryption and local storage of sensitive information
-- **User Profile Customization**: Personalized settings to enhance user experience
-- **Multi-step Onboarding**: Guided setup process for new users
-
-## 🏗️ Architecture
-
-MindCompanion follows a three-tier architecture designed for scalability, security, and performance:
-
-\`\`\`
-├── backend/           # Node.js/Express backend server
-├── mobile/            # React Native/Expo mobile application
-└── ml-model/          # Crisis detection ML model service
-\`\`\`
+## Project Overview
+MindCompanion is a comprehensive mental health support application that combines mobile technology, machine learning, and conversational AI to provide personalized mental health support. The system includes crisis detection capabilities and personalized chat interactions based on user profiles.
 
 ### Core Components
 
-1. **Mobile Application**: React Native/Expo frontend that provides the user interface
-2. **Backend API**: Node.js/Express server that handles authentication, data storage, and OpenAI integration
-3. **ML Service**: Python-based crisis detection model using DistilBERT for real-time text analysis
+1. **Mobile Application (React Native/Expo)**
+   - User authentication and profile management
+   - Personalized chat interface
+   - Mood tracking functionality
+   - Profile customization
+   - Multi-session chat management
 
-## 🛠️ Technical Stack
+2. **Backend Server (Node.js/Express)**
+   - User authentication and session management
+   - Chat history storage
+   - Integration with OpenAI API
+   - Crisis detection service integration
 
-### Mobile Application
-- **Framework**: React Native with Expo
-- **Language**: TypeScript
-- **Navigation**: React Navigation (Stack & Drawer)
-- **State Management**: React Context API
-- **Storage**: AsyncStorage & Secure Store
-- **Networking**: Axios
-- **UI Components**: Custom components with React Native Animatable
-- **Visualization**: React Native Chart Kit & SVG
+3. **Crisis Detection Service (Python/FastAPI)**
+   - DistilBERT-based crisis detection model
+   - Real-time text analysis
+   - Crisis probability assessment
 
-### Backend Server
-- **Runtime**: Node.js 14+
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT-based auth system
-- **External API**: OpenAI API integration
-- **Security**: bcrypt for password hashing
-- **Environment**: dotenv for configuration
+## Technical Stack
 
-### ML Service
-- **Framework**: FastAPI
-- **ML Libraries**: PyTorch, Transformers
-- **Model**: Fine-tuned DistilBERT
-- **Language**: Python 3.8+
+### Mobile App
+- React Native with Expo
+- TypeScript
+- React Navigation (Stack & Drawer)
+- AsyncStorage for local data
+- Axios for API communication
+- React Native Animatable
+- Custom UI components
 
-## 📥 Installation & Setup
+### Backend
+- Node.js & Express
+- MongoDB with Mongoose
+- JWT authentication
+- OpenAI API integration
+- RESTful API architecture
+
+### ML Model
+- FastAPI
+- PyTorch
+- Transformers (DistilBERT)
+- Python 3.8+
+
+## Features
+
+### User Experience
+- Multi-step onboarding process
+- Personalized chat interactions
+- Real-time crisis detection
+- Mood tracking visualization
+- Multiple chat sessions
+- Customizable user profiles
+
+### Security & Privacy
+- JWT-based authentication
+- Secure password hashing
+- Protected API endpoints
+- Local storage of sensitive data
+
+### AI & ML Capabilities
+- Crisis detection model
+- Personalized response generation
+- Context-aware conversations
+- Real-time text analysis
+
+## Installation & Setup
 
 ### Prerequisites
-\`\`\`bash
+
 # Node.js 14+ for backend
 # Python 3.8+ for ML model
 # MongoDB instance
 # OpenAI API key
-\`\`\`
-
-### Backend Setup
-\`\`\`bash
-cd backend
-npm install
-cp .env.example .env
-# Configure environment variables
-npm run dev
-\`\`\`
-
-### Mobile App Setup
-\`\`\`bash
-cd mobile
-npm install
-# Update api.ts with your backend URL
-expo start
-\`\`\`
-
-### ML Model Setup
-\`\`\`bash
-cd ml-model/my-crisis-detection
-pip install -r requirements.txt
-python crisis_service.py
-\`\`\`
-
-## 🔌 API Documentation
-
-### Authentication
-- POST \`/api/auth/signup\` - User registration
-- POST \`/api/auth/login\` - User login
-
-### Chat
-- POST \`/api/chat/new-session\` - Create new chat session
-- POST \`/api/chat/message\` - Send message
-- GET \`/api/chat/sessions\` - Get user's chat sessions
-- GET \`/api/chat/history/:sessionId\` - Get chat history
-
-### Crisis Detection
-- POST \`/predict\` - Analyze text for crisis indicators
-
-## 📂 Project Structure
-
-\`\`\`
-├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   └── app.js
-├── mobile/
-│   ├── components/
-│   ├── navigation/
-│   ├── screens/
-│   ├── services/
-│   └── App.tsx
-└── ml-model/
-    └── my-crisis-detection/
-        ├── crisis_service.py
-        └── train_distilbert.py
-\`\`\`
-
-## 👥 Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📮 Contact
-For any queries regarding this project, please open an issue in the repository.
-`;
-
-  // Write the README file to the current directory
-  fs.writeFileSync(path.join(process.cwd(), 'README.md'), readmeContent);
-  console.log('README.md has been successfully generated!');
-}
-
-// Execute the function
-generateReadme();
-
-module.exports = { generateReadme };
